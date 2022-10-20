@@ -12,6 +12,24 @@ RETURNS float AS $$
     WHERE F.codigo = codigo_funcionario
 $$ LANGUAGE SQL;
 
-SELECT * FROM funcionarios;
+SELECT  calculaINSS(codigo) FROM funcionarios;
 
-SELECT calculaINSS(6);
+-- DROP FUNCTION IF EXISTS calculaINSS;
+
+CREATE OR REPLACE FUNCTION calculaINSS(codigo_funcionario integer) RETURNS FLOAT AS
+$$
+DECLARE
+    _salario FLOAT;
+    _inss    FLOAT;
+BEGIN
+    _salario := (SELECT salario FROM funcionarios F WHERE F.codigo = codigo_funcionario);
+    IF _salario <= 2000 THEN
+        _inss := _salario * 0.10;
+    ELSE
+        _inss := _salario * 0.15;
+    END IF;
+    RETURN _inss;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT  calculaINSS(codigo) FROM funcionarios;
