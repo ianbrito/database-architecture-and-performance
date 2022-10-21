@@ -4,42 +4,42 @@
 CREATE OR REPLACE FUNCTION getFuncionarioSigno(codigo_funcionario INTEGER) RETURNS TEXT AS
 $$
 DECLARE
-    _data_nascimento DATE;
-    ano              INTEGER;
+    data_nascimento text;
 BEGIN
-    SELECT datanascimento INTO _data_nascimento FROM funcionarios WHERE codigo = codigo_funcionario;
-    ano := EXTRACT(year FROM _data_nascimento);
-
+    data_nascimento := (SELECT to_char(datanascimento, 'mm-dd') FROM funcionarios WHERE codigo = codigo_funcionario);
     CASE
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '03-21')::date AND concat(ano, '-', '04-20')::date
+        WHEN data_nascimento BETWEEN '03-21' AND '04-20'
             THEN RETURN 'Áries';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '04-21')::date AND concat(ano, '-', '05-20')::date
+        WHEN data_nascimento BETWEEN '04-21' AND '05-20'
             THEN RETURN 'Touro';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '05-21')::date AND concat(ano, '-', '06-20')::date
+        WHEN data_nascimento BETWEEN '05-21' AND '06-20'
             THEN RETURN 'Gêmeos';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '06-21')::date AND concat(ano, '-', '07-22')::date
+        WHEN data_nascimento BETWEEN '06-21' AND '07-22'
             THEN RETURN 'Câncer';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '07-23')::date AND concat(ano, '-', '08-22')::date
+        WHEN data_nascimento BETWEEN '07-23' AND '08-22'
             THEN RETURN 'Leão';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '08-23')::date AND concat(ano, '-', '09-22')::date
+        WHEN data_nascimento BETWEEN '08-23' AND '09-22'
             THEN RETURN 'Virgem';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '07-23')::date AND concat(ano, '-', '10-22')::date
+        WHEN data_nascimento BETWEEN '07-23' AND '10-22'
             THEN RETURN 'Libra';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '10-23')::date AND concat(ano, '-', '11-21')::date
+        WHEN data_nascimento BETWEEN '10-23' AND '11-21'
             THEN RETURN 'Escorpião';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '11-22')::date AND concat(ano, '-', '12-21')::date
+        WHEN data_nascimento BETWEEN '11-22' AND '12-21'
             THEN RETURN 'Sagitário';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '12-22')::date AND concat(ano, '-', '01-20')::date
+        WHEN data_nascimento BETWEEN '12-22' AND '12-31'
             THEN RETURN 'Capricórnio';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '12-22')::date AND concat(ano, '-', '12-31')::date
+        WHEN data_nascimento BETWEEN '01-01' AND '01-20'
             THEN RETURN 'Capricórnio';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '01-01')::date AND concat(ano, '-', '02-19')::date
+        WHEN data_nascimento BETWEEN '01-21' AND '02-19'
             THEN RETURN 'Aquário';
-        WHEN _data_nascimento BETWEEN concat(ano, '-', '02-19')::date AND concat(ano, '-', '03-20')::date
+        WHEN data_nascimento BETWEEN '02-19' AND '03-20'
             THEN RETURN 'Peixes';
-        ELSE RETURN null;
+        ELSE RETURN NULL;
         END CASE;
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT getFuncionarioSigno(1);
+SELECT
+    datanascimento,
+    getFuncionarioSigno(codigo)
+FROM funcionarios;

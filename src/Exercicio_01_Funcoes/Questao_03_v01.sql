@@ -11,21 +11,3 @@ RETURNS float AS $$
 $$ LANGUAGE SQL;
 
 SELECT totalSalario('Capataz') AS salarios;
-
-DROP FUNCTION IF EXISTS totalSalario;
-
-CREATE OR REPLACE FUNCTION totalSalario(funcao_funcionario enum_funcao) RETURNS FLOAT AS
-$$
-DECLARE
-    _soma_salarios FLOAT;
-    row RECORD;
-BEGIN
-    _soma_salarios := 0;
-    FOR row IN SELECT salario FROM funcionarios F WHERE F.funcao = funcao_funcionario LOOP
-        _soma_salarios := _soma_salarios + row.salario;
-    END LOOP ;
-    RETURN _soma_salarios;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT totalSalario('Capataz') AS salarios;

@@ -1,3 +1,6 @@
+-- ALTER DATABASE fazenda SET datestyle TO ISO, DMY;
+
+-- SET datestyle TO ISO, DMY;
 
 --inserindo registros na tabela funcionarios
 INSERT INTO funcionarios VALUES 
