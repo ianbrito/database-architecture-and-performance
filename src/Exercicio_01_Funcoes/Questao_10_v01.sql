@@ -7,9 +7,8 @@ CREATE OR REPLACE FUNCTION mesAniversario(codigo_funcionario INTEGER) RETURNS te
 $$
 DECLARE
     mes   integer;
-    meses text[];
+    meses text[] = array ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 BEGIN
-    meses = array ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     SELECT extract(month from datanascimento) FROM funcionarios WHERE codigo = codigo_funcionario INTO mes;
     RETURN meses[mes];
 END

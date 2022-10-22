@@ -4,18 +4,10 @@
 CREATE OR REPLACE FUNCTION getQtdFuncionarios(nome_fazenda varchar)
 RETURNS integer AS $$
     SELECT
-        count(FUN.codigo) AS funcionarios
+        count(FF.codigofunc) AS funcionarios
     FROM funcionarios_fazendas FF
         JOIN fazendas FAZ ON FAZ.codigo = FF.codfazenda
-        JOIN funcionarios FUN ON FUN.codigo = FF.codigofunc
     WHERE FAZ.nome = nome_fazenda;
 $$ LANGUAGE SQL;
 
-SELECT getQtdFuncionarios('Tapajoara');
-
-SELECT
-    count(FUN.codigo) AS funcionarios
-FROM funcionarios_fazendas FF
-    JOIN fazendas FAZ ON FAZ.codigo = FF.codfazenda
-    JOIN funcionarios FUN ON FUN.codigo = FF.codigofunc
-WHERE FAZ.nome = 'Tapajoara';
+SELECT getQtdFuncionarios(nome) FROM fazendas;

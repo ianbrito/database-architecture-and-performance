@@ -9,7 +9,7 @@ DECLARE
     nascimento date;
 BEGIN
     SELECT datanascimento FROM funcionarios WHERE codigo = codigo_funcionario INTO nascimento;
-    RETURN to_char(nascimento, 'Month');
+    RETURN TO_CHAR(nascimento, 'Month');
 END
 $$ LANGUAGE plpgsql;
 

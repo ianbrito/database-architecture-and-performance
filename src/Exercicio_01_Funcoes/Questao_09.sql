@@ -27,8 +27,7 @@ BEGIN
         WHEN data_nascimento BETWEEN '11-22' AND '12-21'
             THEN RETURN 'Sagitário';
         WHEN data_nascimento BETWEEN '12-22' AND '12-31'
-            THEN RETURN 'Capricórnio';
-        WHEN data_nascimento BETWEEN '01-01' AND '01-20'
+                 OR data_nascimento BETWEEN '01-01' AND '01-20'
             THEN RETURN 'Capricórnio';
         WHEN data_nascimento BETWEEN '01-21' AND '02-19'
             THEN RETURN 'Aquário';
